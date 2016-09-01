@@ -1,0 +1,11 @@
+{
+  "name": "angular-webpack-init",
+  "version": "0.0.1",
+  "description": "Workflow for angular with webpack",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Humberto Barrientos Gonzalez",
+  "license": "ISC"
+}
