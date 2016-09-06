@@ -2,9 +2,13 @@
   "name": "angular-webpack-init",
   "version": "0.0.1",
   "description": "Workflow for angular with webpack",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "server": "webpack-dev-server --history-api-fallback --inline --progress",
+    "start": "npm run server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/isejaa/angular-webpack-init.git"
   },
   "author": "Humberto Barrientos Gonzalez",
   "license": "ISC",
@@ -14,6 +18,7 @@
   "devDependencies": {
     "karma": "^1.2.0",
     "karma-webpack": "^1.8.0",
-    "webpack": "^1.13.2"
+    "webpack": "^1.13.2",
+    "webpack-dev-server": "^1.15.1"
   }
 }
