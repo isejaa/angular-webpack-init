@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "description": "Workflow for angular with webpack",
   "scripts": {
-    "server": "webpack-dev-server --history-api-fallback --inline --progress",
+    "build": "webpack --bail --progress --profile",
+    "server": "webpack-dev-server",
     "start": "npm run server"
   },
   "repository": {
@@ -11,7 +12,7 @@
     "url": "https://github.com/isejaa/angular-webpack-init.git"
   },
   "author": "Humberto Barrientos Gonzalez",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "angular": "^1.5.8"
   },
