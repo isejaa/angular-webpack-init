@@ -8,7 +8,12 @@ export default function router($stateProvider, $urlRouterProvider, $locationProv
     url: '/',
     template: template,
     controller: 'TodoController',
-    controllerAs: 'vm'
+    controllerAs: 'vm',
+    resolve: {
+      store: function(todoStorage) {
+        return todoStorage.get();
+      }
+    }
   });
 
   $stateProvider.state('main.status', {

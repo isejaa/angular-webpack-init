@@ -1,5 +1,5 @@
 
-export default function localStorage($q) {
+export default function LocalStorage($q) {
   var STORAGE_ID = 'todos-angularjs';
 
   var store = {

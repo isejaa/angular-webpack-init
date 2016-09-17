@@ -1,6 +1,8 @@
 const webpack = require('webpack');
 const path = require('path');
+const autoprefixer = require('autoprefixer');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const ENV = process.env.npm_lifecycle_event;
@@ -46,7 +48,7 @@ module.exports = function makeConfig() {
     * Reference: http://webpack.github.io/docs/configuration.html#devtool
     * Type of sourcemap to use per build type
     */
-    /*
+
    if (isTest) {
      config.devtool = 'inline-source-map';
    } else if (isProd) {
@@ -54,7 +56,7 @@ module.exports = function makeConfig() {
    } else {
      config.devtool = 'eval-source-map';
    }
-   */
+
 
    /**
     * Loaders
@@ -78,8 +80,33 @@ module.exports = function makeConfig() {
       // Allow loading html through js
       test: /\.html$/,
       loader: 'html'
+    }, {
+      // CSS LOADER
+      // Reference: https://github.com/webpack/css-loader
+      // Allow loading css through js
+      //
+      // Reference: https://github.com/postcss/postcss-loader
+      // Postprocess your css with PostCSS plugins
+      test: /\.scss$/,
+      // Reference: https://github.com/webpack/extract-text-webpack-plugin
+      // Extract css files in production builds
+      //
+      // Reference: https://github.com/webpack/style-loader
+      // Use style-loader in development.
+      loader: isTest ? 'null' : ExtractTextPlugin.extract(['style-loader', 'css-loader?sourceMap!postcss-loader', 'sass-loader'])
     }]
    };
+
+   /**
+   * PostCSS
+   * Reference: https://github.com/postcss/autoprefixer-core
+   * Add vendor prefixes to your css
+   */
+  config.postcss = [
+    autoprefixer({
+      browsers: ['last 2 version']
+    })
+  ];
 
    config.plugins = [];
 
@@ -91,7 +118,12 @@ module.exports = function makeConfig() {
       new HtmlWebpackPlugin({
         template: './src/index.html',
         inject: 'body'
-      })
+      }),
+
+      // Reference: https://github.com/webpack/extract-text-webpack-plugin
+      // Extract css files
+      // Disabled when in test mode or not in build mode
+      new ExtractTextPlugin('[name].[hash].css', {disable: !isProd})
     );
   }
 
