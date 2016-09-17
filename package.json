@@ -4,7 +4,7 @@
   "description": "Workflow for angular with webpack",
   "scripts": {
     "build": "webpack --bail --progress --profile",
-    "server": "webpack-dev-server",
+    "server": "webpack-dev-server --history-api-fallback --inline --progress",
     "start": "npm run server"
   },
   "repository": {
@@ -18,6 +18,9 @@
     "angular-ui-router": "^1.0.0-beta.2"
   },
   "devDependencies": {
+    "babel-core": "^6.14.0",
+    "babel-loader": "^6.2.5",
+    "babel-preset-es2015": "^6.14.0",
     "karma": "^1.2.0",
     "karma-webpack": "^1.8.0",
     "webpack": "^1.13.2",

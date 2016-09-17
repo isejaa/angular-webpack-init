@@ -1,6 +1,7 @@
+import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 
-import router from './app.router.js';
+import routing from './app.router.js';
 
 angular.module('todo', [uiRouter])
-.config(router);
+.config(routing);

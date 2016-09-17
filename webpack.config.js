@@ -4,7 +4,7 @@ const ENV = process.env.npm_lifecycle_event;
 const isTest = ENV === 'test' || ENV === 'test-watch';
 const isProd = ENV === 'build';
 
-module.export = function makeConfig() {
+module.exports = function makeConfig() {
   const config = {};
   /**
    * Entry
@@ -44,7 +44,15 @@ module.export = function makeConfig() {
     */
    config.module = {
      preLoaders: [],
-     loaders: []
+     loaders: [{
+      // JS LOADER
+      // Reference: https://github.com/babel/babel-loader
+      // Transpile .js files using babel-loader
+      // Compiles ES6 and ES7 into ES5 code
+      test: /\.js$/,
+      loader: 'babel',
+      exclude: /node_modules/
+    }]
    };
 
    config.plugins = [];
@@ -55,11 +63,9 @@ module.export = function makeConfig() {
     * Reference: http://webpack.github.io/docs/webpack-dev-server.html
     */
    config.devServer = {
-     contentBase: './src',
+     contentBase: './.tmp',
      stats: 'minimal'
    };
-
-   console.log(config);
 
    return config;
 }();
