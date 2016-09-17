@@ -1,8 +1,13 @@
 const webpack = require('webpack');
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const ENV = process.env.npm_lifecycle_event;
 const isTest = ENV === 'test' || ENV === 'test-watch';
 const isProd = ENV === 'build';
+
+console.log(`${ENV} -- Test:${isTest} Prod:${isProd}`);
 
 module.exports = function makeConfig() {
   const config = {};
@@ -37,6 +42,21 @@ module.exports = function makeConfig() {
    };
 
    /**
+    * Devtool
+    * Reference: http://webpack.github.io/docs/configuration.html#devtool
+    * Type of sourcemap to use per build type
+    */
+    /*
+   if (isTest) {
+     config.devtool = 'inline-source-map';
+   } else if (isProd) {
+     config.devtool = 'source-map';
+   } else {
+     config.devtool = 'eval-source-map';
+   }
+   */
+
+   /**
     * Loaders
     * Reference: http://webpack.github.io/docs/configuration.html#module-loaders
     * List: http://webpack.github.io/docs/list-of-loaders.html
@@ -52,10 +72,28 @@ module.exports = function makeConfig() {
       test: /\.js$/,
       loader: 'babel',
       exclude: /node_modules/
+    }, {
+      // HTML LOADER
+      // Reference: https://github.com/webpack/raw-loader
+      // Allow loading html through js
+      test: /\.html$/,
+      loader: 'html'
     }]
    };
 
    config.plugins = [];
+
+   // Skip rendering index.html in test mode
+  if (!isTest) {
+    // Reference: https://github.com/ampedandwired/html-webpack-plugin
+    // Render index.html
+    config.plugins.push(
+      new HtmlWebpackPlugin({
+        template: './src/index.html',
+        inject: 'body'
+      })
+    );
+  }
 
    /**
     * Dev server configuration
@@ -63,7 +101,7 @@ module.exports = function makeConfig() {
     * Reference: http://webpack.github.io/docs/webpack-dev-server.html
     */
    config.devServer = {
-     contentBase: './.tmp',
+     contentBase: './src',
      stats: 'minimal'
    };
 

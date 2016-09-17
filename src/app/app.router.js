@@ -1,5 +1,21 @@
+const template = require('./todo/todo.html');
 
+export default function router($stateProvider, $urlRouterProvider, $locationProvider) {
+  $locationProvider.html5Mode(true);
+  $urlRouterProvider.otherwise('/');
 
-export default function router($stateProvider) {
+  $stateProvider.state('main', {
+    url: '/',
+    template: template,
+    controller: 'TodoController',
+    controllerAs: 'vm'
+  });
+
+  $stateProvider.state('main.status', {
+    url: '/:status',
+    template: template,
+    controller: 'TodoController',
+    controllerAs: 'vm'
+  });
 
 }
