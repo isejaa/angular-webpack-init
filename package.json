@@ -14,7 +14,8 @@
   "author": "Humberto Barrientos Gonzalez",
   "license": "MIT",
   "dependencies": {
-    "angular": "^1.5.8"
+    "angular": "^1.5.8",
+    "angular-ui-router": "^1.0.0-beta.2"
   },
   "devDependencies": {
     "karma": "^1.2.0",
