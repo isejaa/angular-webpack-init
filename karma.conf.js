@@ -4,7 +4,7 @@ module.exports = function karmaConfig(config) {
     reporters: ['progress','coverage'],
     files: ['src/tests.webpack.js'],
     preprocessors: {
-      'src/tests.webpack.js': ['webpack', 'sourcemap']
+      'src/tests.webpack.js': ['webpack', 'sourcemap', 'coverage']
     },
     browsers: ['PhantomJS'],
     singleRun: true,

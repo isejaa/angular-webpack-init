@@ -10,9 +10,14 @@ import apiFactory from './services/api.service.js';
 import todoStorage from './services/storage.service.js';
 import localStorage from './services/localStorage.service.js';
 
-angular.module('todo', [uiRouter, ngResource])
+const MODULE_NAME = 'todo';
+
+angular.module(MODULE_NAME, [uiRouter, ngResource])
 .controller('TodoController', TodoController)
 .factory('api', apiFactory)
 .factory('todoStorage', todoStorage)
 .factory('localStorage', localStorage)
 .config(routing);
+
+
+export default MODULE_NAME;

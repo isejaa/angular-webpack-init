@@ -2,26 +2,26 @@ require('./todo.scss');
 
 export default function TodoController($scope, $filter, store, $stateParams) {
   const vm = this;
-  let todos = vm.todos = store.todos;
+  const todos = vm.todos = store.todos;
 
   vm.newTodo = '';
   vm.editedTodo = null;
 
-	$scope.$watch('todos', function () {
+	$scope.$watch('vm.todos', () => {
 		vm.remainingCount = $filter('filter')(todos, { completed: false }).length;
 		vm.completedCount = todos.length - vm.remainingCount;
 		vm.allChecked = !vm.remainingCount;
 	}, true);
 
 	// Monitor the current route for changes and adjust the filter accordingly.
-	$scope.$on('$routeChangeSuccess', function () {
-		var status = vm.status = $routeParams.status || '';
+	$scope.$on('$stateChangeSuccess', () => {
+		var status = vm.status = $stateParams.status || '';
 		vm.statusFilter = (status === 'active') ?
 			{ completed: false } : (status === 'completed') ?
 			{ completed: true } : {};
 	});
 
-  vm.addTodo = function () {
+  vm.addTodo = () => {
   	var newTodo = {
   		title: vm.newTodo.trim(),
   		completed: false
@@ -41,13 +41,13 @@ export default function TodoController($scope, $filter, store, $stateParams) {
 			});
   };
 
-	vm.editTodo = function (todo) {
+	vm.editTodo = (todo) => {
 		vm.editedTodo = todo;
 		// Clone the original todo to restore it on demand.
 		vm.originalTodo = angular.extend({}, todo);
 	};
 
-	vm.saveEdits = function (todo, event) {
+	vm.saveEdits = (todo, event) => {
 		// Blur events are automatically triggered after the form submit event.
 		// This does some unfortunate logic handling to prevent saving twice.
 		if (event === 'blur' && vm.saveEvent === 'submit') {
@@ -79,22 +79,22 @@ export default function TodoController($scope, $filter, store, $stateParams) {
 			});
 	};
 
-	vm.revertEdits = function (todo) {
+	vm.revertEdits = (todo) => {
 		todos[todos.indexOf(todo)] = vm.originalTodo;
 		vm.editedTodo = null;
 		vm.originalTodo = null;
 		vm.reverted = true;
 	};
 
-	vm.removeTodo = function (todo) {
+	vm.removeTodo = (todo) => {
 		store.delete(todo);
 	};
 
-	vm.saveTodo = function (todo) {
+	vm.saveTodo = (todo) => {
 		store.put(todo);
 	};
 
-	vm.toggleCompleted = function (todo, completed) {
+	vm.toggleCompleted = (todo, completed) => {
 		if (angular.isDefined(completed)) {
 			todo.completed = completed;
 		}
@@ -104,12 +104,12 @@ export default function TodoController($scope, $filter, store, $stateParams) {
 			});
 	};
 
-	vm.clearCompletedTodos = function () {
+	vm.clearCompletedTodos = () => {
 		store.clearCompleted();
 	};
 
-	vm.markAll = function (completed) {
-		todos.forEach(function (todo) {
+	vm.markAll = (completed) => {
+		todos.forEach((todo) => {
 			if (todo.completed !== completed) {
 				vm.toggleCompleted(todo, completed);
 			}
