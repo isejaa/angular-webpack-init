@@ -5,22 +5,15 @@ export default function router($stateProvider, $urlRouterProvider, $locationProv
   $urlRouterProvider.otherwise('/');
 
   $stateProvider.state('main', {
-    url: '/',
+    url: '/:status',
     template: template,
     controller: 'TodoController',
     controllerAs: 'vm',
     resolve: {
       store: function(todoStorage) {
-        return todoStorage.get();
+        return todoStorage;
       }
     }
-  });
-
-  $stateProvider.state('main.status', {
-    url: '/:status',
-    template: template,
-    controller: 'TodoController',
-    controllerAs: 'vm'
   });
 
 }

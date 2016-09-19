@@ -3,9 +3,10 @@ export default function todoStorage($http, $injector) {
   // Detect if an API backend is present. If so, return the API module, else
   // hand off the localStorage adapter
   return $http.get('/api')
-    .then(function () {
+    .then(() => {
       return $injector.get('api');
-    }, function () {
+    })
+    .catch(() => {
       return $injector.get('localStorage');
     });
 }
