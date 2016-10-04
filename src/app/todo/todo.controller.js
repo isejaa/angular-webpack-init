@@ -14,7 +14,7 @@ export default function TodoController($scope, $filter, store, $stateParams) {
 	}, true);
 
 	// Monitor the current route for changes and adjust the filter accordingly.
-	$scope.$on('$stateChangeSuccess', () => {
+	$scope.$on('$routeChangeSuccess', (e) => {
 		var status = vm.status = $stateParams.status || '';
 		vm.statusFilter = (status === 'active') ?
 			{ completed: false } : (status === 'completed') ?
