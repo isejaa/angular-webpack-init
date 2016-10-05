@@ -73,14 +73,17 @@ module.exports = function makeConfig() {
       // Transpile .js files using babel-loader
       // Compiles ES6 and ES7 into ES5 code
       test: /\.js$/,
-      loader: 'babel',
+      loader: 'ng-annotate!babel',
       exclude: /node_modules/
     }, {
       // HTML LOADER
       // Reference: https://github.com/webpack/raw-loader
       // Allow loading html through js
       test: /\.html$/,
-      loader: 'html'
+      exclude: [
+        path.resolve(__dirname, "src/index.html")
+      ],
+      loader: 'ng-cache-loader'
     }, {
       // CSS LOADER
       // Reference: https://github.com/webpack/css-loader
@@ -104,9 +107,7 @@ module.exports = function makeConfig() {
    * Add vendor prefixes to your css
    */
   config.postcss = [
-    autoprefixer({
-      browsers: ['last 2 version']
-    })
+    autoprefixer({ browsers: ['last 2 version'] })
   ];
 
   config.plugins = [];

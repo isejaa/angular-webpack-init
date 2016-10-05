@@ -1,6 +1,7 @@
 require('./todo.scss');
 
-export default function TodoController($scope, $filter, store, $stateParams) {
+export default function TodoController($scope, $filter, store, $routeParams) {
+	'ngInject';
   const vm = this;
   const todos = vm.todos = store.todos;
 
@@ -15,7 +16,7 @@ export default function TodoController($scope, $filter, store, $stateParams) {
 
 	// Monitor the current route for changes and adjust the filter accordingly.
 	$scope.$on('$routeChangeSuccess', (e) => {
-		var status = vm.status = $stateParams.status || '';
+		var status = vm.status = $routeParams.status || '';
 		vm.statusFilter = (status === 'active') ?
 			{ completed: false } : (status === 'completed') ?
 			{ completed: true } : {};
